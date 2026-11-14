@@ -9,6 +9,11 @@
 
 @theme inline {
     --font-heading: var(--font-sans);
+    --font-hero: var(--font-manrope);
+    --font-badge: var(--font-space-mono);
+    --font-headline: var(--font-instrument-sans);
+    --font-stat: var(--font-plus-jakarta-sans);
+    --font-label: var(--font-inter-tight);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);

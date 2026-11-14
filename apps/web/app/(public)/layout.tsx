@@ -6,9 +6,9 @@ export default function PublicLayout({
   children: React.ReactNode
 }>) {
   return (
-    <>
+    <div className="isolate flex min-h-svh flex-col bg-[#010103] text-white">
       <SiteHeader />
       {children}
-    </>
+    </div>
   )
 }
