@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useRouter } from "next/navigation"
 import {
   ArrowRight,
   Briefcase,
@@ -26,6 +27,7 @@ const roles = [
 ] as const
 
 function SignUpForm() {
+  const router = useRouter()
   const [isLoading, setIsLoading] = React.useState(false)
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -53,6 +55,9 @@ function SignUpForm() {
       toast.success("Account created successfully!")
 
       console.log("Signup response:", signUpResponse)
+
+      router.replace("/")
+      router.refresh()
     } catch (error) {
       console.error("Signup error:", error)
       toast.error("Something went wrong. Please try again.")

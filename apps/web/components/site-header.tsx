@@ -17,7 +17,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@workspace/ui/components/sheet"
-import { useSession } from "@/lib/auth-client"
+import { useSession, signOut } from "@/lib/auth-client"
 
 const navLinks = [
   { href: "/jobs", label: "Browse Jobs" },
@@ -36,6 +36,9 @@ function SiteHeader() {
   const isActive = useActiveLink()
   const { data: session } = useSession()
   console.log("user session in navber", session)
+  const handleSignOut = async () => {
+    await signOut()
+  }
 
   return (
     <header className="w-full pt-4 lg:pt-6">
@@ -85,7 +88,17 @@ function SiteHeader() {
 
             <div className="flex items-center gap-4 pr-2">
               {session?.user ? (
-                <span className="text-white">Welcome,{session.user.name}</span>
+                <>
+                  <span className="text-white">{session.user.name}</span>
+                  <Button
+                    onClick={handleSignOut}
+                    variant="ghost"
+                    nativeButton={false}
+                    className="h-[58px] w-[106px] rounded-[12px] px-0 text-[18px] font-semibold text-brand hover:bg-white/5 hover:text-brand"
+                  >
+                    Sign Out
+                  </Button>
+                </>
               ) : (
                 <>
                   <Button
