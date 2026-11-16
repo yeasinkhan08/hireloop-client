@@ -26,9 +26,9 @@ function SignInForm() {
     try {
       const { data: responseSignInPage, error } = await authClient.signIn.email(
         {
-          email: data.email,
-          password: data.password,
-          rememberMe: data.rememberMe === "on" || data.rememberMe === true,
+          email: data.email as string,
+          password: data.password as string,
+          rememberMe: data.rememberMe === "on",
           callbackURL: "/",
         }
       )

@@ -17,6 +17,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@workspace/ui/components/sheet"
+import { useSession } from "@/lib/auth-client"
 
 const navLinks = [
   { href: "/jobs", label: "Browse Jobs" },
@@ -33,6 +34,8 @@ function useActiveLink() {
 function SiteHeader() {
   const [menuOpen, setMenuOpen] = React.useState(false)
   const isActive = useActiveLink()
+  const { data: session } = useSession()
+  console.log("user session in navber", session)
 
   return (
     <header className="w-full pt-4 lg:pt-6">
@@ -81,21 +84,27 @@ function SiteHeader() {
             />
 
             <div className="flex items-center gap-4 pr-2">
-              <Button
-                variant="ghost"
-                nativeButton={false}
-                className="h-[58px] w-[106px] rounded-[12px] px-0 text-[18px] font-semibold text-brand hover:bg-white/5 hover:text-brand"
-                render={<Link href="/sign-in" />}
-              >
-                Sign In
-              </Button>
-              <Button
-                nativeButton={false}
-                className="h-[52px] w-[143px] rounded-[12px] border border-[#090A15]/10 bg-brand px-0 text-[18px] font-medium text-brand-foreground shadow-[inset_0_3px_10px_rgba(255,255,255,0.2)] hover:bg-brand/90"
-                render={<Link href="/sign-up" />}
-              >
-                Get Started
-              </Button>
+              {session?.user ? (
+                <span className="text-white">Welcome,{session.user.name}</span>
+              ) : (
+                <>
+                  <Button
+                    variant="ghost"
+                    nativeButton={false}
+                    className="h-[58px] w-[106px] rounded-[12px] px-0 text-[18px] font-semibold text-brand hover:bg-white/5 hover:text-brand"
+                    render={<Link href="/sign-in" />}
+                  >
+                    Sign In
+                  </Button>
+                  <Button
+                    nativeButton={false}
+                    className="h-[52px] w-[143px] rounded-[12px] border border-[#090A15]/10 bg-brand px-0 text-[18px] font-medium text-brand-foreground shadow-[inset_0_3px_10px_rgba(255,255,255,0.2)] hover:bg-brand/90"
+                    render={<Link href="/sign-up" />}
+                  >
+                    Get Started
+                  </Button>
+                </>
+              )}
             </div>
           </nav>
 
@@ -125,7 +134,10 @@ function SiteHeader() {
                 <Image src={logo} alt="HireLoop" className="h-9 w-auto" />
               </SheetHeader>
 
-              <nav aria-label="Mobile" className="flex flex-col gap-1 px-3 py-4">
+              <nav
+                aria-label="Mobile"
+                className="flex flex-col gap-1 px-3 py-4"
+              >
                 {navLinks.map((link) => {
                   const active = isActive(link.href)
 

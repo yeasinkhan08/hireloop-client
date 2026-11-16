@@ -1,7 +1,14 @@
 "use client"
 
 import * as React from "react"
-import { ArrowRight, Lock, Mail, UserRound } from "lucide-react"
+import {
+  ArrowRight,
+  Briefcase,
+  Lock,
+  Mail,
+  ShieldCheck,
+  UserRound,
+} from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@workspace/ui/components/button"
@@ -11,6 +18,12 @@ import { Label } from "@workspace/ui/components/label"
 import { AuthField } from "@/components/auth/auth-field"
 import { collectFormData } from "@/lib/collect-form-data"
 import { authClient } from "@/lib/auth-client"
+
+const roles = [
+  { value: "seeker", label: "Job seeker", icon: UserRound },
+  { value: "recruiter", label: "Recruiter", icon: Briefcase },
+  { value: "admin", label: "Admin", icon: ShieldCheck },
+] as const
 
 function SignUpForm() {
   const [isLoading, setIsLoading] = React.useState(false)
@@ -28,6 +41,7 @@ function SignUpForm() {
         name: data.name as string,
         email: data.email as string,
         password: data.password as string,
+        role: data.role as (typeof roles)[number]["value"],
         callbackURL: "/",
       })
 
@@ -83,6 +97,40 @@ function SignUpForm() {
         hint="Use at least 8 characters."
         required
       />
+
+      <fieldset className="space-y-2">
+        <legend className="text-[13px] font-medium text-white/70">
+          I&apos;m joining as
+        </legend>
+
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+          {roles.map((role) => (
+            <label
+              key={role.value}
+              className="group relative cursor-pointer select-none"
+            >
+              <input
+                type="radio"
+                name="role"
+                value={role.value}
+                defaultChecked={role.value === "seeker"}
+                required
+                className="sr-only"
+              />
+
+              <span className="flex h-14 flex-col items-center justify-center gap-1 rounded-xl border border-white/[0.08] bg-white/[0.03] px-1.5 text-center text-white/55 transition-colors group-has-[:checked]:border-brand/60 group-has-[:checked]:bg-brand/10 group-has-[:checked]:text-white group-has-[:focus-visible]:ring-4 group-has-[:focus-visible]:ring-brand/20 hover:bg-white/[0.05] sm:h-12 sm:flex-row sm:gap-1.5 sm:px-2">
+                <role.icon
+                  aria-hidden
+                  className="size-4 shrink-0 text-white/35 transition-colors group-has-[:checked]:text-brand"
+                />
+                <span className="text-[12px] leading-none font-medium">
+                  {role.label}
+                </span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
       <div className="flex items-start gap-2.5 pt-0.5">
         <Checkbox

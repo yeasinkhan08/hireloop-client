@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth"
 import { MongoClient } from "mongodb"
 import { mongodbAdapter } from "@better-auth/mongo-adapter"
+import { z } from "zod"
 
 const mongoUri = process.env.MONGODB_URI
 
@@ -26,7 +27,12 @@ export const auth = betterAuth({
     additionalFields: {
       role: {
         type: ["seeker", "recruiter", "admin"],
-        input: false,
+        required: true,
+        defaultValue: "seeker",
+        input: true,
+        validator: {
+          input: z.enum(["seeker", "recruiter", "admin"]),
+        },
       },
     },
   },
