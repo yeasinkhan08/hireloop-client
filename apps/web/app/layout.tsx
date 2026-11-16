@@ -9,6 +9,8 @@ import {
 } from "next/font/google"
 
 import "@workspace/ui/globals.css"
+import { Toaster } from "sonner"
+
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@workspace/ui/lib/utils"
 
@@ -67,7 +69,10 @@ export default function RootLayout({
       )}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {children}
+          <Toaster theme="dark" richColors position="top-right" />
+        </ThemeProvider>
       </body>
     </html>
   )
