@@ -9,8 +9,8 @@ import {
   SidebarMenuItem,
   SidebarHeader,
 } from "@workspace/ui/components/sidebar"
-import { role } from "better-auth/plugins";
-import { Session } from "inspector";
+import { role } from "better-auth/plugins"
+import { Session } from "inspector"
 
 import { Plus } from "lucide-react"
 
@@ -20,9 +20,8 @@ const menuItemsByRole = {
   admin: [],
 }
 export function DashboardSidebar() {
-const {data: session, isPending}= useSession();
-const role=session?.user?.role? || 'seeker'
- 
+  const { data: session, isPending } = useSession()
+  const role = session?.user?.role || "seeker"
 
   return (
     <Sidebar>
@@ -33,11 +32,11 @@ const role=session?.user?.role? || 'seeker'
       <SidebarContent>
         <SidebarGroup>
           <SidebarMenu>
-            {menuItemsByRole[role].map((project) => (
-              <SidebarMenuItem key={project.name}>
-                <SidebarMenuButton render={<a href={project.url} />}>
-                  <project.icon />
-                  <span>{project.name}</span>
+            {menuItemsByRole[role].map((item) => (
+              <SidebarMenuItem key={item.id}>
+                <SidebarMenuButton render={<a href={item.url} />}>
+                  <item.icon />
+                  <span>{item.name}</span>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
